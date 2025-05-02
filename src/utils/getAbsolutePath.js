@@ -1,10 +1,7 @@
 import path, { isAbsolute, normalize } from 'path';
-import { handleCurrentDir } from '../services/handleCurrentdir.js';
+import { cwd } from 'process';
 
 export const getAbsolutePath = (pathArg) => {
-  const currentDir = handleCurrentDir();
-  const absolutePath = isAbsolute(pathArg)
-    ? path.resolve(pathArg)
-    : path.resolve(currentDir, pathArg);
+  const absolutePath = isAbsolute(pathArg) ? pathArg : path.resolve(cwd(), pathArg);
   return normalize(absolutePath);
 };

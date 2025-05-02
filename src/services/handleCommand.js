@@ -1,20 +1,27 @@
 import { MESSAGES } from '../consts/messages.js';
 import { stdout } from 'node:process';
 import { handleCurrentDir } from './handleCurrentdir.js';
+import { parseArgs } from '../utils/parseArgs.js';
 
 export const handleCommand = async (input, app) => {
-  const inputArray = input.split(' ');
-  const command = inputArray[0];
+  const parsedArgs = parseArgs(input);
+  const command = parsedArgs[0];
+  const paths = parsedArgs.slice(1);
 
   switch (command) {
     case '.exit':
       app.close();
       break;
     case 'up':
-      const destination = handleCurrentDir('..');
-      app.setPrompt(MESSAGES.working_directory(destination));
+      const upperDirectory = await handleCurrentDir('..');
+      app.setPrompt(MESSAGES.working_directory(upperDirectory));
       break;
     case 'cd':
+      if (!paths[0]) {
+        stdout.write(MESSAGES.invalid_input_arguments());
+      }
+      const targetDirectory = await handleCurrentDir(paths[0]);
+      app.setPrompt(MESSAGES.working_directory(targetDirectory));
       break;
     case 'ls':
       break;
@@ -41,6 +48,6 @@ export const handleCommand = async (input, app) => {
     case 'decompress':
       break;
     default:
-      stdout.write(MESSAGES.invalid_input());
+      stdout.write(MESSAGES.invalid_input_command());
   }
 };

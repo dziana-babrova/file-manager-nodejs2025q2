@@ -9,15 +9,15 @@ import { handleCurrentDir } from './services/handleCurrentdir.js';
 const startApp = async () => {
   const app = readline.createInterface({ input, output });
   const name = getName();
-  const currentDir = handleCurrentDir(os.homedir());
+  const currentDir = await handleCurrentDir(os.homedir());
 
   output.write(MESSAGES.welcome(name));
 
   app.setPrompt(MESSAGES.working_directory(currentDir));
   app.prompt();
 
-  app.on('line', (value) => {
-    handleCommand(value, app);
+  app.on('line', async (value) => {
+    await handleCommand(value, app);
     app.prompt();
   });
 
