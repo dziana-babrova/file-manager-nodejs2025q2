@@ -8,6 +8,8 @@ import { createFile } from '../commands/fs/add.js';
 import { createDir } from '../commands/fs/mkdir.js';
 import { renameFile } from '../commands/fs/rn.js';
 import { copyFile } from '../commands/fs/cp.js';
+import { moveFile } from '../commands/fs/mv.js';
+import { removeFile } from '../commands/fs/rm.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -64,8 +66,16 @@ export const handleCommand = async (input, app) => {
       await copyFile(paths[0], paths[1]);
       break;
     case 'mv':
+      if (!paths[0] || !paths[1]) {
+        stdout.write(MESSAGES.invalid_input_arguments());
+      }
+      await moveFile(paths[0], paths[1]);
       break;
     case 'rm':
+      if (!paths[0]) {
+        stdout.write(MESSAGES.invalid_input_arguments());
+      }
+      await removeFile(paths[0]);
       break;
     case 'os':
       break;
