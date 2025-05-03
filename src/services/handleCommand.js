@@ -3,6 +3,7 @@ import { stdout } from 'node:process';
 import { handleCurrentDir } from '../commands/fs/handleCurrentdir.js';
 import { parseArgs } from '../utils/parseArgs.js';
 import { listContent } from '../commands/fs/list.js';
+import { readFileContent } from '../commands/fs/cat.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -25,9 +26,14 @@ export const handleCommand = async (input, app) => {
       app.setPrompt(MESSAGES.working_directory(targetDirectory));
       break;
     case 'ls':
-      listContent();
+      await listContent();
       break;
     case 'cat':
+      if (!paths[0]) {
+        stdout.write(MESSAGES.invalid_input_arguments());
+      }
+      readFileContent(paths[0], app);
+
       break;
     case 'add':
       break;

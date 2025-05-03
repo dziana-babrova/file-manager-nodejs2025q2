@@ -18,6 +18,7 @@ const startApp = async () => {
 
   app.on('line', async (value) => {
     await handleCommand(value, app);
+    console.log('worked');
     app.prompt();
   });
 
