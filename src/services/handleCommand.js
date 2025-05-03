@@ -4,6 +4,7 @@ import { handleCurrentDir } from '../commands/fs/handleCurrentdir.js';
 import { parseArgs } from '../utils/parseArgs.js';
 import { listContent } from '../commands/fs/list.js';
 import { readFileContent } from '../commands/fs/cat.js';
+import { createFile } from '../commands/fs/add.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -36,6 +37,10 @@ export const handleCommand = async (input, app) => {
 
       break;
     case 'add':
+      if (!paths[0]) {
+        stdout.write(MESSAGES.invalid_input_arguments());
+      }
+      await createFile(paths[0]);
       break;
     case 'mkdir':
       break;
