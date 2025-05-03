@@ -1,7 +1,8 @@
 import { MESSAGES } from '../consts/messages.js';
 import { stdout } from 'node:process';
-import { handleCurrentDir } from './handleCurrentdir.js';
+import { handleCurrentDir } from '../commands/fs/handleCurrentdir.js';
 import { parseArgs } from '../utils/parseArgs.js';
+import { listContent } from '../commands/fs/list.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -24,6 +25,7 @@ export const handleCommand = async (input, app) => {
       app.setPrompt(MESSAGES.working_directory(targetDirectory));
       break;
     case 'ls':
+      listContent();
       break;
     case 'cat':
       break;

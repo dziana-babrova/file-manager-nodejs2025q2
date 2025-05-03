@@ -4,7 +4,7 @@ import { stdin as input, stdout as output } from 'node:process';
 import { getName } from './services/getName.js';
 import { handleCommand } from './services/handleCommand.js';
 import { MESSAGES } from './consts/messages.js';
-import { handleCurrentDir } from './services/handleCurrentdir.js';
+import { handleCurrentDir } from './commands/fs/handleCurrentdir.js';
 
 const startApp = async () => {
   const app = readline.createInterface({ input, output });
