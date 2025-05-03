@@ -7,6 +7,7 @@ import { readFileContent } from '../commands/fs/cat.js';
 import { createFile } from '../commands/fs/add.js';
 import { createDir } from '../commands/fs/mkdir.js';
 import { renameFile } from '../commands/fs/rn.js';
+import { copyFile } from '../commands/fs/cp.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -57,6 +58,10 @@ export const handleCommand = async (input, app) => {
       await renameFile(paths[0], paths[1]);
       break;
     case 'cp':
+      if (!paths[0] || !paths[1]) {
+        stdout.write(MESSAGES.invalid_input_arguments());
+      }
+      await copyFile(paths[0], paths[1]);
       break;
     case 'mv':
       break;
