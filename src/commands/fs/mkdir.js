@@ -4,7 +4,7 @@ import { getAbsolutePath } from '../../utils/getAbsolutePath.js';
 import { mkdir } from 'node:fs/promises';
 import { MESSAGES } from '../../consts/messages.js';
 
-export const createDir = async () => {
+export const createDir = async (path) => {
   const absolutePath = getAbsolutePath(path);
   if (!(await doesExist(absolutePath))) {
     await mkdir(absolutePath);
