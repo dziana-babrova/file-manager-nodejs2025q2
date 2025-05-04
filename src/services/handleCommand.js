@@ -11,6 +11,7 @@ import { copyFile } from '../commands/fs/cp.js';
 import { moveFile } from '../commands/fs/mv.js';
 import { removeFile } from '../commands/fs/rm.js';
 import { validateAndExecute } from './validatePath.js';
+import { handleOsCommand } from '../commands/os/os.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -52,6 +53,7 @@ export const handleCommand = async (input, app) => {
       await validateAndExecute(paths, 1, removeFile.bind(null, paths[0], paths[1]));
       break;
     case 'os':
+      await handleOsCommand(paths[0]);
       break;
     case 'hash':
       break;
@@ -60,6 +62,6 @@ export const handleCommand = async (input, app) => {
     case 'decompress':
       break;
     default:
-      stdout.write(MESSAGES.invalid_input_command());
+      console.log(MESSAGES.invalid_input_command());
   }
 };

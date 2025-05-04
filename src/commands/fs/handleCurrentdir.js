@@ -1,4 +1,4 @@
-import { chdir, cwd, stdout } from 'node:process';
+import { chdir, cwd } from 'node:process';
 import { getAbsolutePath } from '../../services/getAndValidateAbsolutePath.js';
 import { MESSAGES } from '../../consts/messages.js';
 
