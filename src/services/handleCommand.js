@@ -12,6 +12,7 @@ import { moveFile } from '../commands/fs/mv.js';
 import { removeFile } from '../commands/fs/rm.js';
 import { validateAndExecute } from './validatePath.js';
 import { handleOsCommand } from '../commands/os/os.js';
+import { calculateHash } from '../commands/hash/hash.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -56,6 +57,7 @@ export const handleCommand = async (input, app) => {
       await handleOsCommand(paths[0]);
       break;
     case 'hash':
+      await calculateHash(paths[0]);
       break;
     case 'compress':
       break;
