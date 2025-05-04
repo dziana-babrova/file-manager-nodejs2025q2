@@ -10,6 +10,7 @@ import { renameFile } from '../commands/fs/rn.js';
 import { copyFile } from '../commands/fs/cp.js';
 import { moveFile } from '../commands/fs/mv.js';
 import { removeFile } from '../commands/fs/rm.js';
+import { validateAndExecute } from './validatePath.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -21,61 +22,34 @@ export const handleCommand = async (input, app) => {
       app.close();
       break;
     case 'up':
-      const upperDirectory = await handleCurrentDir('..');
-      app.setPrompt(MESSAGES.working_directory(upperDirectory));
+      await handleCurrentDir('..', app);
       break;
     case 'cd':
-      if (!paths[0]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      const targetDirectory = await handleCurrentDir(paths[0]);
-      app.setPrompt(MESSAGES.working_directory(targetDirectory));
+      await handleCurrentDir(paths[0], app);
       break;
     case 'ls':
       await listContent();
       break;
     case 'cat':
-      if (!paths[0]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      readFileContent(paths[0], app);
-
+      await validateAndExecute(paths, 1, readFileContent.bind(null, paths[0], app));
       break;
     case 'add':
-      if (!paths[0]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      await createFile(paths[0]);
+      await validateAndExecute(paths, 1, createFile.bind(null, paths[0]));
       break;
     case 'mkdir':
-      if (!paths[0]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      await createDir(paths[0]);
+      await validateAndExecute(paths, 1, createDir.bind(null, paths[0]));
       break;
     case 'rn':
-      if (!paths[0] || !paths[1]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      await renameFile(paths[0], paths[1]);
+      await validateAndExecute(paths, 1, renameFile.bind(null, paths[0], paths[1]));
       break;
     case 'cp':
-      if (!paths[0] || !paths[1]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      await copyFile(paths[0], paths[1]);
+      await validateAndExecute(paths, 1, copyFile.bind(null, paths[0], paths[1]));
       break;
     case 'mv':
-      if (!paths[0] || !paths[1]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      await moveFile(paths[0], paths[1]);
+      await validateAndExecute(paths, 1, moveFile.bind(null, paths[0], paths[1]));
       break;
     case 'rm':
-      if (!paths[0]) {
-        stdout.write(MESSAGES.invalid_input_arguments());
-      }
-      await removeFile(paths[0]);
+      await validateAndExecute(paths, 1, removeFile.bind(null, paths[0], paths[1]));
       break;
     case 'os':
       break;

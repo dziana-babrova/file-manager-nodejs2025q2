@@ -1,6 +1,6 @@
 import { cwd } from 'node:process';
 import { readdir, stat } from 'node:fs/promises';
-import { getAbsolutePath } from '../../utils/getAbsolutePath.js';
+import { getAbsolutePath } from '../../services/getAndValidateAbsolutePath.js';
 
 const TYPES = {
   directory: 'Directory',
