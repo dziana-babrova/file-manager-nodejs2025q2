@@ -1,5 +1,4 @@
 import { MESSAGES } from '../consts/messages.js';
-import { stdout } from 'node:process';
 import { handleCurrentDir } from '../commands/fs/handleCurrentdir.js';
 import { parseArgs } from '../utils/parseArgs.js';
 import { listContent } from '../commands/fs/list.js';
@@ -13,6 +12,8 @@ import { removeFile } from '../commands/fs/rm.js';
 import { validateAndExecute } from './validatePath.js';
 import { handleOsCommand } from '../commands/os/os.js';
 import { calculateHash } from '../commands/hash/hash.js';
+import { compress } from '../commands/zlib/compress.js';
+import { decompress } from '../commands/zlib/decompress.js';
 
 export const handleCommand = async (input, app) => {
   const parsedArgs = parseArgs(input);
@@ -60,8 +61,10 @@ export const handleCommand = async (input, app) => {
       await calculateHash(paths[0]);
       break;
     case 'compress':
+      await validateAndExecute(paths, 1, compress.bind(null, paths[0], paths[1]));
       break;
     case 'decompress':
+      await validateAndExecute(paths, 1, decompress.bind(null, paths[0], paths[1]));
       break;
     default:
       console.log(MESSAGES.invalid_input_command());
