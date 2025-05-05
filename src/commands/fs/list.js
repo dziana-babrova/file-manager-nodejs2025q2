@@ -14,7 +14,7 @@ export const listContent = async () => {
   const files = await readdir(currentDir);
   const tableData = await Promise.all(
     files.map(async (file) => {
-      const filePath = getAbsolutePath(file);
+      const filePath = await getAbsolutePath(file, true);
       const fileStat = await stat(filePath);
       const type = fileStat.isDirectory()
         ? TYPES.directory

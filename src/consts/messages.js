@@ -4,5 +4,7 @@ export const MESSAGES = {
   working_directory: (path) => `You are currently in ${path}\nPlease print a command:\n`,
   invalid_input_command: () => `Invalid input. Command doesn't exist`,
   invalid_input_arguments: () => `Invalid input. Mandatory arguments are missing`,
-  operation_failed: () => 'Operation failed\n',
+  operation_failed: () => 'Operation failed',
+  operation_failed_path: (filename) =>
+    `Operation failed. The path cannot be absolute. Provide a ${filename}`,
 };

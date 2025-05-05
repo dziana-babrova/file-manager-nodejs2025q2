@@ -5,7 +5,7 @@ import { getAbsolutePath } from '../../services/getAndValidateAbsolutePath.js';
 
 export const decompress = async (sourcePath, destinationPath) => {
   const sourceAbsolutePath = await getAbsolutePath(sourcePath, true);
-  const destinationAbsolutePath = await getAbsolutePath(destinationPath, true);
+  const destinationAbsolutePath = await getAbsolutePath(destinationPath, false);
 
   const gzip = createBrotliDecompress();
   const source = createReadStream(sourceAbsolutePath);

@@ -28,7 +28,7 @@ export const handleCommand = async (input, app) => {
       await handleCurrentDir('..', app);
       break;
     case 'cd':
-      await handleCurrentDir(paths[0], app);
+      await validateAndExecute(paths, 1, handleCurrentDir.bind(null, paths[0], app));
       break;
     case 'ls':
       await listContent();
@@ -43,28 +43,28 @@ export const handleCommand = async (input, app) => {
       await validateAndExecute(paths, 1, createDir.bind(null, paths[0]));
       break;
     case 'rn':
-      await validateAndExecute(paths, 1, renameFile.bind(null, paths[0], paths[1]));
+      await validateAndExecute(paths, 2, renameFile.bind(null, paths[0], paths[1]));
       break;
     case 'cp':
-      await validateAndExecute(paths, 1, copyFile.bind(null, paths[0], paths[1]));
+      await validateAndExecute(paths, 2, copyFile.bind(null, paths[0], paths[1]));
       break;
     case 'mv':
-      await validateAndExecute(paths, 1, moveFile.bind(null, paths[0], paths[1]));
+      await validateAndExecute(paths, 2, moveFile.bind(null, paths[0], paths[1]));
       break;
     case 'rm':
-      await validateAndExecute(paths, 1, removeFile.bind(null, paths[0], paths[1]));
+      await validateAndExecute(paths, 1, removeFile.bind(null, paths[0]));
       break;
     case 'os':
       await handleOsCommand(paths[0]);
       break;
     case 'hash':
-      await calculateHash(paths[0]);
+      await validateAndExecute(paths, 1, calculateHash.bind(null, paths[0]));
       break;
     case 'compress':
-      await validateAndExecute(paths, 1, compress.bind(null, paths[0], paths[1]));
+      await validateAndExecute(paths, 2, compress.bind(null, paths[0], paths[1]));
       break;
     case 'decompress':
-      await validateAndExecute(paths, 1, decompress.bind(null, paths[0], paths[1]));
+      await validateAndExecute(paths, 2, decompress.bind(null, paths[0], paths[1]));
       break;
     default:
       console.log(MESSAGES.invalid_input_command());

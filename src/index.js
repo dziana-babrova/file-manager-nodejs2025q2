@@ -10,9 +10,9 @@ const startApp = async () => {
   const app = readline.createInterface({ input, output });
   const name = getName();
 
-  await handleCurrentDir(os.homedir(), app);
-
   output.write(MESSAGES.welcome(name));
+
+  await handleCurrentDir(os.homedir(), app);
 
   app.on('line', async (value) => {
     await handleCommand(value, app);
