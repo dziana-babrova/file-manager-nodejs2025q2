@@ -1,5 +1,5 @@
-import { cwd } from 'node:process';
+import { homedir } from 'node:os';
 
 export const getHomedir = () => {
-  console.log(cwd());
+  console.log(homedir());
 };

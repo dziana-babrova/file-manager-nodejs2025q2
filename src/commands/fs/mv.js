@@ -7,8 +7,8 @@ import { basename } from 'node:path';
 export const moveFile = async (sourcePath, destinationPath) => {
   const sourceAbsolutePath = await getAbsolutePath(sourcePath, true);
   const fileName = basename(sourceAbsolutePath);
-  await getAbsolutePath(destinationPath, true);
-  const destinationAbsolutePath = await getAbsolutePath(`${destinationPath}/${fileName}`, false);
+  const destinationAbsolutePathToFolder = await getAbsolutePath(`${destinationPath}/${fileName}.br`, false);
+  const destinationAbsolutePath = await getAbsolutePath(`${destinationAbsolutePathToFolder}/${fileName}`, false);
   const readStream = createReadStream(sourceAbsolutePath);
   const writeStream = createWriteStream(destinationAbsolutePath);
   await pipeline(readStream, writeStream);

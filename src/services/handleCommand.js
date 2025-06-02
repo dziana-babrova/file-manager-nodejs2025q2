@@ -34,7 +34,7 @@ export const handleCommand = async (input, app) => {
       await listContent();
       break;
     case 'cat':
-      await validateAndExecute(paths, 1, readFileContent.bind(null, paths[0], app));
+      await validateAndExecute(paths, 1, readFileContent.bind(null, paths[0]));
       break;
     case 'add':
       await validateAndExecute(paths, 1, createFile.bind(null, paths[0]));
@@ -69,4 +69,6 @@ export const handleCommand = async (input, app) => {
     default:
       console.log(MESSAGES.invalid_input_command());
   }
+  
+  app.prompt();
 };
